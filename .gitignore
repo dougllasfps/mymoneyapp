@@ -2,3 +2,5 @@ node_modules
 *.iml
 .idea
 target
+/src/main/resources/public/appbundle.min.js
+npm-debug.log.*
