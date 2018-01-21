@@ -19,9 +19,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EntityScan("org.dougllas.springboot.model")
-@ComponentScan(basePackages = "org.dougllas")
-@EnableJpaRepositories(basePackages = "org.dougllas.springboot.repository")
+@EntityScan("org.dougllas.mymoney.model")
+@ComponentScan(basePackages = {"org.dougllas.*"})
+@EnableJpaRepositories(basePackages = "org.dougllas.mymoney.repository")
 public class SpringConfiguration extends SpringBootServletInitializer {
 
     @Bean
