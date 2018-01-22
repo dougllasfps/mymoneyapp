@@ -1,12 +1,9 @@
-package org.dougllas.sbootreactapp;
+package org.dougllas.mymoney.cfg;
 
-import org.dougllas.mymoney.model.Credit;
 import org.dougllas.mymoney.repository.CreditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
 
 @Component
 public class BeforeStart implements CommandLineRunner{

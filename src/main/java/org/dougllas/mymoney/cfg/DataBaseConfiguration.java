@@ -1,4 +1,4 @@
-package org.dougllas.sbootreactapp;
+package org.dougllas.mymoney.cfg;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
