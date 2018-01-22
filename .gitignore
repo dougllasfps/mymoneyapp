@@ -4,3 +4,4 @@ node_modules
 target
 /src/main/resources/public/appbundle.min.js
 npm-debug.log.*
+/src/main/webapp/node_modules/

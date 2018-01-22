@@ -1,14 +1,14 @@
 {
-  "name": "springbootreactmodelapp",
+  "name": "mymoneyapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "UTIL ARTICLES:",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --progress --colors --inline --hot",
     "prod": "webpack --progress -p"
   },
   "keywords": [],
-  "author": "",
+  "author": "dougllas sousa",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.15.3",
@@ -33,5 +33,13 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dougllasfps/mymoneyapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dougllasfps/mymoneyapp/issues"
+  },
+  "homepage": "https://github.com/dougllasfps/mymoneyapp#readme"
 }
