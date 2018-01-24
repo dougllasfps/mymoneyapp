@@ -8,23 +8,23 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-public class Debit implements Serializable {
+public class Debit implements Serializable, org.dougllas.mymoney.generic.Entity {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
-    @NotNull
+    @NotNull(message = "{validation.campo.name.null}")
     @NotEmpty
     private String name;
 
     @Column
-    @NotNull
+    @NotNull(message = "{validation.campo.value.null}")
     private BigDecimal value;
 
     @Column
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull(message = "{validation.campo.status.null}")
     private DebitStatus status;
 
     public Integer getId() {

@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
 
-public interface Controller<E extends Entity, ID extends Serializable> {
+public interface CrudController<E extends Entity, ID extends Serializable> {
 
     ResponseEntity findAll();
 

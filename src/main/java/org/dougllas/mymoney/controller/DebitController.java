@@ -1,13 +1,13 @@
 package org.dougllas.mymoney.controller;
 
-import org.dougllas.mymoney.generic.AbstractController;
-import org.dougllas.mymoney.model.Credit;
-import org.dougllas.mymoney.repository.CreditRepository;
-import org.springframework.stereotype.Controller;
+import org.dougllas.mymoney.generic.AbstractCrudRestController;
+import org.dougllas.mymoney.model.Debit;
+import org.dougllas.mymoney.repository.DebitRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping("/api/debits")
-@Controller
-public class DebitController extends AbstractController<Credit, Integer, CreditRepository> {
+public class DebitController extends AbstractCrudRestController<Debit, Integer, DebitRepository> {
 
 }

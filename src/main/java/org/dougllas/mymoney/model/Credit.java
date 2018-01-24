@@ -1,6 +1,6 @@
 package org.dougllas.mymoney.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,12 +15,12 @@ public class Credit implements Serializable, org.dougllas.mymoney.generic.Entity
     private Integer id;
 
     @Column
-    @NotEmpty
-    @NotNull
+    @NotBlank(message = "{validation.campo.name.empty}")
+    @NotNull(message = "{validation.campo.name.null}")
     private String name;
 
     @Column
-    @NotNull
+    @NotNull(message = "{validation.campo.value.null}")
     private BigDecimal value;
 
     public Integer getId() {

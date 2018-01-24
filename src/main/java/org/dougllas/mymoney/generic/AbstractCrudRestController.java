@@ -2,6 +2,7 @@ package org.dougllas.mymoney.generic;
 
 import org.dougllas.mymoney.exceptionhandler.BadRequestException;
 import org.dougllas.mymoney.exceptionhandler.ResourceNotFountException;
+import org.dougllas.mymoney.exceptionhandler.ValidationHandlerController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -9,10 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.net.URI;
 
-public class AbstractController<E extends Entity, ID extends Serializable, R extends JpaRepository> implements Controller<E,ID> {
+public class AbstractCrudRestController<E extends Entity, ID extends Serializable, R extends JpaRepository> implements CrudController<E,ID>, ValidationHandlerController {
 
     @Autowired
     private R repository;
@@ -39,7 +41,7 @@ public class AbstractController<E extends Entity, ID extends Serializable, R ext
 
     @Override
     @PostMapping
-    public ResponseEntity save(@RequestBody E entity) {
+    public ResponseEntity save( @RequestBody @Valid E entity ) {
         repository.save(entity);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -52,12 +54,13 @@ public class AbstractController<E extends Entity, ID extends Serializable, R ext
 
     @Override
     @PutMapping("{id}")
-    public ResponseEntity update(@RequestBody E entity, @PathVariable("id") ID id) {
-        validateExistence(id);
+    public ResponseEntity update( @RequestBody @Valid E entity, @PathVariable("id") ID id) {
+        validateResource(id);
 
         if(!entity.getId().equals(id)){
-            throw new BadRequestException("Id está diferente do id da entidade.");
+            throw new BadRequestException("Id passado está diferente do id da entidade.");
         }
+
         repository.save(entity);
         return ResponseEntity.ok().build();
     }
@@ -65,12 +68,12 @@ public class AbstractController<E extends Entity, ID extends Serializable, R ext
     @Override
     @DeleteMapping("{id}")
     public ResponseEntity delete( @PathVariable("id") ID id) {
-        validateExistence(id);
+        validateResource(id);
         repository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    private void validateExistence(ID id) {
+    private void validateResource(ID id) {
         E existent = (E) repository.findOne(id);
         if(existent == null){
             throw new ResourceNotFountException("Item Não encontrado.");
