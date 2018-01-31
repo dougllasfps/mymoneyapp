@@ -24,10 +24,10 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
-        }),
-        new ExtractTextPlugin('app.css'),
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.DefinePlugin({
+        })
+        ,new ExtractTextPlugin('app.css')
+        ,new webpack.optimize.UglifyJsPlugin()
+        ,new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         })
     ],
