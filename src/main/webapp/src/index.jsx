@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom'
 import App from './main/app'
 import reducers from './main/reducers'
 
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 
-const appStore = createStore(reducers);
+import promisse from 'redux-promise'
+
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+const appStore = applyMiddleware(promisse)(createStore)(reducers, devTools);
 
 ReactDOM.render(
     <Provider store={appStore}>
