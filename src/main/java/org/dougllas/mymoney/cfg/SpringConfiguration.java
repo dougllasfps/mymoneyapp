@@ -43,7 +43,7 @@ public class SpringConfiguration extends SpringBootServletInitializer {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/resources/**")
-                        .addResourceLocations("classpath:/public/");
+                        .addResourceLocations("classpath:/public/", "/public/");
             }
 
             @Override
