@@ -1,6 +1,13 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const environment = {
+        'process.env':{
+            NODE_ENV : JSON.stringify('production'),
+            SERVICE_URL : JSON.stringify('http://localhost:8080')
+        }
+}
+
 module.exports = {
     entry: './src/index.jsx',
     output: {
@@ -27,9 +34,7 @@ module.exports = {
         })
         ,new ExtractTextPlugin('app.css')
         ,new webpack.optimize.UglifyJsPlugin()
-        ,new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
-        })
+        ,new webpack.DefinePlugin(environment)
     ],
     module: {
         loaders: [{

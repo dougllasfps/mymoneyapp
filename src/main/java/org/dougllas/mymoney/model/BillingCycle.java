@@ -4,8 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -28,7 +26,16 @@ public class BillingCycle implements Serializable {
     @Column
     @NotNull
     @Range(min = 1970, max = 2100)
-    private Integer year;
+    private Integer ano;
+
+    public BillingCycle() {
+    }
+
+    public BillingCycle(String name, Integer month, Integer ano) {
+        this.name = name;
+        this.month = month;
+        this.ano = ano;
+    }
 
     public Integer getId() {
         return id;
@@ -54,11 +61,11 @@ public class BillingCycle implements Serializable {
         this.month = month;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getAno() {
+        return ano;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setAno(Integer ano) {
+        this.ano = ano;
     }
 }
