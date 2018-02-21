@@ -1,7 +1,6 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-
 var environment = {
     'process.env':{
         NODE_ENV : JSON.stringify('production'),
