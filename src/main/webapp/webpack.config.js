@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const environment = {
         'process.env':{
             NODE_ENV : JSON.stringify('production'),
-            SERVICE_URL : JSON.stringify('http://localhost:8080')
+            SERVICE_URL : JSON.stringify('https://mymoneyapp.herokuapp.com')
         }
 }
 
