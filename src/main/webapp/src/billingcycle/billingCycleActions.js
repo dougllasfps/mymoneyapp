@@ -9,3 +9,10 @@ export function getList(){
         payload: request
     }
 }
+
+export function create(values){
+    axios.post(`${BASE_URL}/api/billingCycles`, values)
+    return {
+        type : 'SENT'
+    }
+}

@@ -1,5 +1,6 @@
 package org.dougllas.mymoney.controller;
 
+import org.dougllas.mymoney.generic.AbstractCrudRestController;
 import org.dougllas.mymoney.model.BillingCycle;
 import org.dougllas.mymoney.model.Summary;
 import org.dougllas.mymoney.repository.BillingCycleRepository;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * Criado por dougllas.sousa em 01/02/2018.
@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/billingCycles")
-public class BillingCyclesController {
+public class BillingCyclesController extends AbstractCrudRestController<BillingCycle, Integer, BillingCycleRepository> {
 
     @Autowired
     private BillingCycleRepository billingCycleRepository;
@@ -35,11 +35,6 @@ public class BillingCyclesController {
         summary.setCredit(BigDecimal.valueOf(100));
         summary.setDebt(BigDecimal.valueOf(200));
         return ResponseEntity.ok(summary);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<BillingCycle>> all(){
-        return ResponseEntity.ok(billingCycleRepository.findAll());
     }
 
 }

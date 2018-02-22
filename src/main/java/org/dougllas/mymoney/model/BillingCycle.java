@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-public class BillingCycle implements Serializable {
+public class BillingCycle implements Serializable, org.dougllas.mymoney.generic.Entity {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
