@@ -23,6 +23,12 @@ public class BillingCyclesController {
     @Autowired
     private BillingCycleRepository billingCycleRepository;
 
+    /**
+     *
+     * @return
+     *
+     * retorna a posição atual do usuário.
+     */
     @GetMapping("summary")
     public ResponseEntity<Summary> getSummary(){
         Summary summary = new Summary();

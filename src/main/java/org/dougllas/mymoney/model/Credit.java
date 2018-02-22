@@ -1,6 +1,7 @@
 package org.dougllas.mymoney.model;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class Credit implements Serializable, org.dougllas.mymoney.generic.Entity
 
     @Column
     @NotNull(message = "{validation.campo.value.null}")
+    @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private BigDecimal value;
 
     public Integer getId() {
