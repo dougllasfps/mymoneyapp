@@ -73,10 +73,7 @@ public class AbstractCrudRestController<E extends Entity, ID extends Serializabl
 
     @Override
     @DeleteMapping("{id}")
-    public ResponseEntity delete( @PathVariable("id") ID id, BindingResult bindingResult) {
-        validateResource(id,bindingResult);
-        Response<E> response = new Response();
-        if (handleErrors(bindingResult, response)) return ResponseEntity.badRequest().body(response);
+    public ResponseEntity delete( @PathVariable("id") ID id) {
         repository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

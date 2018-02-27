@@ -2,9 +2,10 @@ import axios from 'axios';
 import {toastr} from 'react-redux-toastr'
 import {selectTab,showTabs} from '../common/tab/tabActions'
 
-import {reset} from 'redux-form'
+import {reset, initialize} from 'redux-form'
 
 const BASE_URL = process.env.SERVICE_URL;
+const FORM_INITIAL_VALUES = {}
 
 export function getList(){
     let request = axios.get(`${BASE_URL}/api/billingCycles`)
@@ -15,18 +16,26 @@ export function getList(){
 }
 
 export function create(values){
-    console.log(values)
+    return submit(values, 'post')
+}
+
+export function update(values){
+    return submit(values, 'put')
+}
+
+export function remove(values){
+    return submit(values, 'delete')
+}
+
+function submit(values, method){
+    let id = values.id ? values.id : '';
     return dispatch => {
-        axios.post(`${BASE_URL}/api/billingCycles`, values)
+        axios[method](`${BASE_URL}/api/billingCycles/${id}`, values)
         .then( resp => {
-            toastr.success("Sucesso", "Registro foi salvo com sucesso.")
-            dispatch([
-                reset('billingCycleForm'),
-                getList(),
-                selectTab('tabList'),
-                showTabs('tabList', 'tabCreate')
-            ])
+            toastr.success("Sucesso", "Operação realizada com sucesso.")
+            dispatch(init())
         }).catch( e => {
+            console.log(e, e.response.data, e.response)
             e.response.data.errors.forEach(error => {
                 toastr.error("Erro", error)
             });
@@ -34,9 +43,29 @@ export function create(values){
     }
 }
 
+export function init(){
+    return[
+        showTabs('tabList','tabCreate'),
+        getList(),
+        selectTab('tabList'),
+        initialize('billingCycleForm', FORM_INITIAL_VALUES)
+    ]
+}
+
 export function showUpdate(billingCycle){
+    console.log(billingCycle)
     return[
         showTabs('tabUpdate'),
-        selectTab('tabUpdate')
+        selectTab('tabUpdate'),
+        initialize('billingCycleForm', billingCycle)
+    ]
+}
+
+export function showDelete(billingCycle){
+    console.log(billingCycle)
+    return[
+        showTabs('tabDelete'),
+        selectTab('tabDelete'),
+        initialize('billingCycleForm', billingCycle)
     ]
 }

@@ -16,6 +16,6 @@ public interface CrudController<E extends Entity, ID extends Serializable> {
 
     ResponseEntity update(@Valid E entity, ID id, BindingResult bindingResult);
 
-    ResponseEntity delete(ID id, BindingResult bindingResult);
+    ResponseEntity delete(ID id);
 
 }

@@ -29,7 +29,6 @@ const environment = {
     'process.env':{
         NODE_ENV : JSON.stringify('production'),
         SERVICE_URL : JSON.stringify('https://mymoneyapp.herokuapp.com')
-        // SERVICE_URL : JSON.stringify('http://localhost:8080')
     }
 }
 
@@ -40,7 +39,6 @@ const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin()
 const providePlugin = new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery'})
 
 const plugins = [ providePlugin, extractTextPlugin, uglifyJsPlugin, definePlugin ]
-
 
 module.exports = {
     loaders : loaders,
