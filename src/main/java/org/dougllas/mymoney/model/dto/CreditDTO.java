@@ -1,8 +1,9 @@
-package org.dougllas.mymoney.model;
+package org.dougllas.mymoney.model.dto;
 
+import org.dougllas.mymoney.model.BillingCycle;
+import org.dougllas.mymoney.model.Credit;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,36 +12,20 @@ import java.math.BigDecimal;
  * Criado por dougllas.sousa em 28/02/2018.
  */
 
-@Entity
-public class Credit implements Serializable, org.dougllas.mymoney.generic.Entity {
+public class CreditDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
     @NotBlank(message = "{validation.campo.name.empty}")
     @NotNull(message = "{validation.campo.name.null}")
     private String name;
 
-    @Column(precision = 16, scale = 2)
     @NotNull(message = "{validation.campo.value.null}")
     private BigDecimal value;
 
-    @ManyToOne
-    @JoinColumn(name = "billing_cycle")
     private BillingCycle billingCycle;
 
-    public Credit() {
-    }
-
-    public Credit(String name, BigDecimal value, BillingCycle billingCycle) {
-        this.name = name;
-        this.value = value;
-        this.billingCycle = billingCycle;
-    }
-
-    public Credit(Integer id, String name, BigDecimal value, BillingCycle billingCycle) {
+    public CreditDTO(Integer id, String name, BigDecimal value, BillingCycle billingCycle) {
         this.id = id;
         this.name = name;
         this.value = value;
@@ -77,5 +62,13 @@ public class Credit implements Serializable, org.dougllas.mymoney.generic.Entity
 
     public void setBillingCycle(BillingCycle billingCycle) {
         this.billingCycle = billingCycle;
+    }
+
+    public static Credit toEntity(CreditDTO dto){
+        return new Credit(dto.id, dto.name, dto.value, dto.billingCycle);
+    }
+
+    public static CreditDTO entityToDTO(Credit credit){
+        return new CreditDTO(credit.getId(), credit.getName(), credit.getValue(), credit.getBillingCycle());
     }
 }

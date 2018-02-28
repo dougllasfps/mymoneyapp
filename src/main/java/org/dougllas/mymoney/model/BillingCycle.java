@@ -1,40 +1,54 @@
 package org.dougllas.mymoney.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.Range;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 public class BillingCycle implements Serializable, org.dougllas.mymoney.generic.Entity {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
-    @NotNull
-    @NotEmpty
     private String name;
 
     @Column
-    @NotNull
-    @Range(min = 1, max = 12)
     private Integer month;
 
     @Column
-    @NotNull
-    @Range(min = 1970, max = 2100)
     private Integer ano;
 
-    public BillingCycle() {
-    }
+    @OneToMany(mappedBy = "billingCycle")
+    private List<Credit> credits;
+
+    @OneToMany(mappedBy = "billingCycle")
+    private List<Debit> debits;
+
+    public BillingCycle() {}
 
     public BillingCycle(String name, Integer month, Integer ano) {
         this.name = name;
         this.month = month;
         this.ano = ano;
+    }
+
+    public BillingCycle(Integer id, String name, Integer month, Integer ano) {
+        this.id = id;
+        this.name = name;
+        this.month = month;
+        this.ano = ano;
+    }
+
+    public BillingCycle(Integer id, String name, Integer month, Integer ano, List<Credit> credits, List<Debit> debits) {
+        this.id = id;
+        this.name = name;
+        this.month = month;
+        this.ano = ano;
+        this.credits = credits;
+        this.debits = debits;
     }
 
     public Integer getId() {
@@ -67,5 +81,21 @@ public class BillingCycle implements Serializable, org.dougllas.mymoney.generic.
 
     public void setAno(Integer ano) {
         this.ano = ano;
+    }
+
+    public List<Credit> getCredits() {
+        return credits == null ? Collections.emptyList() : credits;
+    }
+
+    public void setCredits(List<Credit> credits) {
+        this.credits = credits;
+    }
+
+    public List<Debit> getDebits() {
+        return debits;
+    }
+
+    public void setDebits(List<Debit> debits) {
+        this.debits = debits;
     }
 }

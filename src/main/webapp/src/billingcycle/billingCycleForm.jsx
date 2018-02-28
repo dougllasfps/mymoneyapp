@@ -6,11 +6,12 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import {init} from '../billingcycle/billingCycleActions'
+import CreditList from '../billingcycle/creditList'
 
 class BillingCycleForm extends React.Component{
 
     render(){
-        const {handleSubmit, readOnly, submitClass,submitLabel} = this.props
+        const {handleSubmit, readOnly, submitClass, submitLabel} = this.props
         return(
             <form role="form" onSubmit={handleSubmit}>
                 <div className="box-body">
@@ -20,6 +21,7 @@ class BillingCycleForm extends React.Component{
                            label="Mês" type="number" placeholder="Informe o mês"  />
                     <Field name="ano" component={FormGroup} cols="12 4" readOnly={readOnly}
                            label="Ano" type="number" placeholder="Informe o ano" />
+                    <CreditList readOnly={readOnly} cols="12 6" />
                 </div>
                 <div className="box-footer">
                     <button type="sumit" className={`btn btn-${submitClass}`}>{submitLabel ? submitLabel : 'Submit'}</button>

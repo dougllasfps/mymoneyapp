@@ -27,7 +27,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableJpaRepositories(basePackages = "org.dougllas.mymoney.repository")
 public class SpringConfiguration extends SpringBootServletInitializer {
 
-
     @Bean(name = "messageSource")
     public MessageSource messageSource(){
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
