@@ -67,7 +67,15 @@ public class BillingCycleServiceImpl implements BillingCycleService {
 
     @Override
     public BillingCycle save(BillingCycle billingCycle){
-        return billingCycleRepository.save(billingCycle);
+        List<Credit> credits = billingCycle.getCredits();
+        List<Debit> debits = billingCycle.getDebits();
+
+        BillingCycle save = billingCycleRepository.save(billingCycle);
+
+        credits.forEach( c -> creditRepository.save(c) );
+        debits.forEach( d -> debitRepository.save(d) );
+
+        return save;
     }
 
     @Override
