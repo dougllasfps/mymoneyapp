@@ -27,7 +27,7 @@ const loaders = [ babelLoader, extractTextPluginLoaders, fileLoader ]
 //enviroment
 const environment = {
     'process.env':{
-        //NODE_ENV : JSON.stringify('production'),
+        NODE_ENV : JSON.stringify('production'),
         SERVICE_URL : JSON.stringify('https://mymoneyapp.herokuapp.com')
     }
 }
