@@ -56,16 +56,34 @@ public class BillingCyclesController implements Serializable, ErrorHandler {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity findOne( @PathVariable("id") Integer id, BindingResult result) {
-        Optional<BillingCycle> optional = getService().findById(id);
-
-        if(!optional.isPresent()){
-            result.addError(new ObjectError("entidade","Item Não encontrado."));
-        }
+    public ResponseEntity findOne( @PathVariable("id") Integer id) {
+        Optional<BillingCycle> optional = getService().findById(id, false);
 
         Response<BillingCycleDTO> response = new Response();
 
-        if (handleErrors(result, response)) {
+        if(!optional.isPresent()){
+            response.getErrors().add("Item Não encontrado.");
+        }
+
+        if (response.hasErrors()) {
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        BillingCycleDTO billingCycleDTO = BillingCycleDTO.entityToDTO(optional.get());
+        return new ResponseEntity(Response.createResponse(billingCycleDTO), HttpStatus.OK);
+    }
+
+    @GetMapping("/creditsAndDebits/{id}")
+    public ResponseEntity findOneWithCreditsAndDebits( @PathVariable("id") Integer id) {
+        Optional<BillingCycle> optional = getService().findById(id, true);
+
+        Response<BillingCycleDTO> response = new Response();
+
+        if(!optional.isPresent()){
+            response.getErrors().add("Item Não encontrado.");
+        }
+
+        if (response.hasErrors()) {
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -107,7 +125,7 @@ public class BillingCyclesController implements Serializable, ErrorHandler {
     }
 
     public void validateResource(@PathVariable("id") Integer id, BindingResult bindingResult) {
-        Optional<BillingCycle> optional = getService().findById(id);
+        Optional<BillingCycle> optional = getService().findById(id, false);
 
         if(!optional.isPresent()){
             bindingResult.addError(new ObjectError("entidade","Item Não encontrado."));

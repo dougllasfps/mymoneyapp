@@ -1,5 +1,6 @@
 package org.dougllas.mymoney.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dougllas.mymoney.model.BillingCycle;
 import org.dougllas.mymoney.model.Credit;
 import org.hibernate.validator.constraints.NotBlank;
@@ -23,7 +24,11 @@ public class CreditDTO implements Serializable {
     @NotNull(message = "{validation.campo.value.null}")
     private BigDecimal value;
 
+    @JsonIgnore
     private BillingCycle billingCycle;
+
+    public CreditDTO() {
+    }
 
     public CreditDTO(Integer id, String name, BigDecimal value, BillingCycle billingCycle) {
         this.id = id;
@@ -69,6 +74,7 @@ public class CreditDTO implements Serializable {
     }
 
     public static CreditDTO entityToDTO(Credit credit){
+        if(credit == null) return null;
         return new CreditDTO(credit.getId(), credit.getName(), credit.getValue(), credit.getBillingCycle());
     }
 }

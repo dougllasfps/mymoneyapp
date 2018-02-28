@@ -16,6 +16,6 @@ public interface BillingCycleService {
 
     List<BillingCycle> findAll(boolean fetchLists);
 
-    Optional<BillingCycle> findById(Integer id);
+    Optional<BillingCycle> findById(Integer id, boolean fetchLists);
 
 }

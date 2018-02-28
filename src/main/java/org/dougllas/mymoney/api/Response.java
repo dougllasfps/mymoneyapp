@@ -1,5 +1,7 @@
 package org.dougllas.mymoney.api;
 
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,5 +36,9 @@ public class Response<T> {
         Response<T> response = new Response<>();
         response.setData(data);
         return response;
+    }
+
+    public boolean hasErrors(){
+        return !CollectionUtils.isEmpty(errors);
     }
 }

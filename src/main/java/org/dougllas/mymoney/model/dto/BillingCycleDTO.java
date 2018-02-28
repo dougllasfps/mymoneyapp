@@ -97,6 +97,9 @@ public class BillingCycleDTO implements Serializable{
     }
 
     public static BillingCycle toEntity(BillingCycleDTO dto){
+
+        if(dto == null) return null;
+
         List<Credit> credits = new ArrayList<>();
         dto.getCredits().forEach( c -> credits.add(CreditDTO.toEntity(c)) );
 
@@ -107,6 +110,7 @@ public class BillingCycleDTO implements Serializable{
     }
 
     public static BillingCycleDTO entityToDTO(BillingCycle entity){
+        if(entity == null) return  null;
         List<CreditDTO> credits = new ArrayList<>();
 
         entity.getCredits().forEach(c -> {

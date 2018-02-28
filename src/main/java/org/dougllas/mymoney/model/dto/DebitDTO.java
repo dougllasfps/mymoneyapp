@@ -1,5 +1,6 @@
 package org.dougllas.mymoney.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dougllas.mymoney.model.Debit;
 import org.dougllas.mymoney.model.DebitStatus;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -22,6 +23,7 @@ public class DebitDTO implements Serializable {
     @NotNull(message = "{validation.campo.status.null}")
     private DebitStatus status;
 
+    @JsonIgnore
     private BillingCycleDTO billingCycle;
 
     public DebitDTO() {
@@ -76,11 +78,10 @@ public class DebitDTO implements Serializable {
     }
 
     public static Debit toEntity(DebitDTO dto){
-        return new Debit(dto.id, dto.name, dto.value, dto.status, BillingCycleDTO.toEntity(dto.billingCycle));
+        return new Debit(dto.id, dto.name, dto.value, dto.status, null);
     }
 
     public static DebitDTO entityToDTO(Debit credit){
-        BillingCycleDTO billingCycleDTO = BillingCycleDTO.entityToDTO(credit.getBillingCycle());
-        return new DebitDTO( credit.getId(), credit.getName(), credit.getValue(), credit.getStatus(), billingCycleDTO);
+        return new DebitDTO( credit.getId(), credit.getName(), credit.getValue(), credit.getStatus(), null);
     }
 }

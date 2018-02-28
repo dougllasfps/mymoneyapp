@@ -46,11 +46,7 @@ public class BillingCycleServiceImpl implements BillingCycleService {
 
         all.stream().forEach( b -> {
             if(fetchLists) {
-                List<Credit> credits = creditRepository.findByBillingCycle(b);
-                b.setCredits(credits);
-
-                List<Debit> debits = debitRepository.findByBillingCycle(b);
-                b.setDebits(debits);
+                fetchOtherProperties(b);
             }else{
                 b.setCredits(Collections.emptyList());
                 b.setDebits(Collections.emptyList());
@@ -60,9 +56,23 @@ public class BillingCycleServiceImpl implements BillingCycleService {
         return all;
     }
 
+    public void fetchOtherProperties(BillingCycle b) {
+        List<Credit> credits = creditRepository.findByBillingCycle(b);
+        b.setCredits(credits);
+
+        List<Debit> debits = debitRepository.findByBillingCycle(b);
+        b.setDebits(debits);
+    }
+
     @Override
-    public Optional<BillingCycle> findById(Integer id) {
-        return Optional.ofNullable(billingCycleRepository.findOne(id));
+    public Optional<BillingCycle> findById(Integer id, boolean fetchLists) {
+        Optional<BillingCycle> result = Optional.ofNullable(billingCycleRepository.findOne(id));
+
+        result.ifPresent( b -> {
+            fetchOtherProperties(b);
+        });
+
+        return result;
     }
 
     @Override
@@ -70,12 +80,20 @@ public class BillingCycleServiceImpl implements BillingCycleService {
         List<Credit> credits = billingCycle.getCredits();
         List<Debit> debits = billingCycle.getDebits();
 
-        BillingCycle save = billingCycleRepository.save(billingCycle);
+        billingCycle = billingCycleRepository.save(billingCycle);
 
-        credits.forEach( c -> creditRepository.save(c) );
-        debits.forEach( d -> debitRepository.save(d) );
+        final BillingCycle saved = billingCycle;
 
-        return save;
+        credits.forEach( c ->{
+            c.setBillingCycle(saved);
+            creditRepository.save(c);
+        });
+        debits.forEach( d -> {
+            d.setBillingCycle(saved);
+            debitRepository.save(d);
+        });
+
+        return billingCycle;
     }
 
     @Override
