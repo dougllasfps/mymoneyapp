@@ -1,5 +1,5 @@
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm, formValueSelector} from 'redux-form'
 import FormGroup from '../common/form/formGroup'
 
 import {connect} from 'react-redux'
@@ -11,7 +11,7 @@ import CreditList from '../billingcycle/creditList'
 class BillingCycleForm extends React.Component{
 
     render(){
-        const {handleSubmit, readOnly, submitClass, submitLabel} = this.props
+        const {handleSubmit, readOnly, submitClass, submitLabel, list} = this.props
         return(
             <form role="form" onSubmit={handleSubmit}>
                 <div className="box-body">
@@ -21,7 +21,7 @@ class BillingCycleForm extends React.Component{
                            label="Mês" type="number" placeholder="Informe o mês"  />
                     <Field name="ano" component={FormGroup} cols="12 4" readOnly={readOnly}
                            label="Ano" type="number" placeholder="Informe o ano" />
-                    <CreditList readOnly={readOnly} cols="12 6" />
+                    <CreditList list={list} readOnly={readOnly} cols="12 6" />
                 </div>
                 <div className="box-footer">
                     <button type="sumit" className={`btn btn-${submitClass}`}>{submitLabel ? submitLabel : 'Submit'}</button>
@@ -36,5 +36,10 @@ const reduxFormConfig = {form: 'billingCycleForm', destroyOnUnmount: false};
 BillingCycleForm = reduxForm(reduxFormConfig)(BillingCycleForm);
 
 const mapDispatchToProps = dispatch => bindActionCreators({init}, dispatch)
+
+const selector = formValueSelector('billingCycleForm')
+const mapStateToProps = state => ({
+    list : selector(state, 'credits')
+})
 
 export default connect(null, mapDispatchToProps)(BillingCycleForm)

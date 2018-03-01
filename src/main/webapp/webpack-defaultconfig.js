@@ -29,6 +29,7 @@ const environment = {
     'process.env':{
         NODE_ENV : JSON.stringify('production'),
         SERVICE_URL : JSON.stringify('https://mymoneyapp.herokuapp.com')
+        // SERVICE_URL : JSON.stringify('https:/localhost:8080')
     }
 }
 

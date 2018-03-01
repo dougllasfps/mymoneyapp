@@ -14,6 +14,10 @@ class CreditList extends React.Component{
 
     renderRows(){
         const {list, readOnly} = this.props;
+        console.log(list);
+        if(!list){
+            return;
+        }
 
         return list.map( (item, index) =>{
             <tr key={index}>
@@ -45,7 +49,7 @@ class CreditList extends React.Component{
             <Grid cols={this.props.cols}>
                 <fieldset>
                     <legend>Créditos</legend>
-                    {/*
+
                         <table className="table" >
                             <thead>
                                 <tr>
@@ -55,15 +59,14 @@ class CreditList extends React.Component{
                                 </tr>
                             </thead>
                             <tbody>
-                                {renderRows()}
+                                {this.renderRows()}
                             </tbody>
                         </table>
-                */}
+
                 </fieldset>
             </Grid>
         )
     }
 }
-
 
 export default CreditList;
