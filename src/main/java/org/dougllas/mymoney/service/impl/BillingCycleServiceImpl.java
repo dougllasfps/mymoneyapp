@@ -9,6 +9,7 @@ import org.dougllas.mymoney.repository.DebitRepository;
 import org.dougllas.mymoney.service.BillingCycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +42,7 @@ public class BillingCycleServiceImpl implements BillingCycleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BillingCycle> findAll(boolean fetchLists) {
         List<BillingCycle> all = billingCycleRepository.findAll();
 
@@ -65,6 +67,7 @@ public class BillingCycleServiceImpl implements BillingCycleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<BillingCycle> findById(Integer id, boolean fetchLists) {
         Optional<BillingCycle> result = Optional.ofNullable(billingCycleRepository.findOne(id));
         if(fetchLists)
@@ -74,6 +77,7 @@ public class BillingCycleServiceImpl implements BillingCycleService {
     }
 
     @Override
+    @Transactional
     public BillingCycle save(BillingCycle billingCycle){
         List<Credit> credits = billingCycle.getCredits();
         List<Debit> debits = billingCycle.getDebits();
@@ -95,6 +99,7 @@ public class BillingCycleServiceImpl implements BillingCycleService {
     }
 
     @Override
+    @Transactional
     public void delete(Integer id){
         billingCycleRepository.delete(id);
     }
