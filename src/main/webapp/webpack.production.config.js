@@ -29,7 +29,6 @@ const environment = {
     'process.env':{
         NODE_ENV : JSON.stringify('production'),
         SERVICE_URL : JSON.stringify('https://mymoneyapp.herokuapp.com')
-        // SERVICE_URL : JSON.stringify('https:/localhost:8080')
     }
 }
 
@@ -42,7 +41,19 @@ const providePlugin = new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery',
 const plugins = [ providePlugin, extractTextPlugin, uglifyJsPlugin, definePlugin ]
 
 module.exports = {
-    loaders : loaders,
+    entry: './src/index.jsx',
+    output: {
+        path: '../resources/public',
+        filename: './appbundle.js'
+    },
+    resolve: {
+        extensions: ['', '.js', '.jsx'],
+        alias: {
+            modules: __dirname + '/node_modules',
+            jquery: 'modules/admin-lte/plugins/jQuery/jquery-2.2.3.min.js',
+            bootstrap: 'modules/admin-lte/bootstrap/js/bootstrap.js'
+        }
+    },
     plugins: plugins,
-    environment: environment
+    module: { loaders: loaders }
 }

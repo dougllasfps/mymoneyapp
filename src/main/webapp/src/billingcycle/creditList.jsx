@@ -13,13 +13,10 @@ class CreditList extends React.Component{
     }
 
     renderRows(){
-        const {list, readOnly} = this.props;
-        console.log(list);
-        if(!list){
-            return;
-        }
-
-        return list.map( (item, index) =>{
+        const {readOnly} = this.props;
+        const list = this.props.list || []
+        
+        const components = list.map( (item, index) =>  (
             <tr key={index}>
                 <td>
                     <Field component={Input} readOnly={readOnly} name={`credits[${index}].name`} />
@@ -41,7 +38,9 @@ class CreditList extends React.Component{
                     </button>
                 </td>
             </tr>
-        })
+        ))
+
+        return components;
     }
 
     render(){
@@ -59,7 +58,7 @@ class CreditList extends React.Component{
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.renderRows()}
+                               {this.renderRows()}
                             </tbody>
                         </table>
 

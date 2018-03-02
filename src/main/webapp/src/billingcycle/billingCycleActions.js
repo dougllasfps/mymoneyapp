@@ -5,7 +5,8 @@ import {selectTab,showTabs} from '../common/tab/tabActions'
 import {reset, initialize} from 'redux-form'
 
 const BASE_URL = process.env.SERVICE_URL;
-const FORM_INITIAL_VALUES = {}
+const INITIAL_VALUES = {credits: [{}], debts: [{}]}
+
 
 export function getList(){
     let request = axios.get(`${BASE_URL}/api/billingCycles`)
@@ -49,7 +50,7 @@ export function init(){
         showTabs('tabList','tabCreate'),
         getList(),
         selectTab('tabList'),
-        initialize('billingCycleForm', FORM_INITIAL_VALUES)
+        initialize('billingCycleForm', INITIAL_VALUES)
     ]
 }
 
