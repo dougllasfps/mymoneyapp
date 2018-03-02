@@ -67,10 +67,8 @@ public class BillingCycleServiceImpl implements BillingCycleService {
     @Override
     public Optional<BillingCycle> findById(Integer id, boolean fetchLists) {
         Optional<BillingCycle> result = Optional.ofNullable(billingCycleRepository.findOne(id));
-
-        result.ifPresent( b -> {
-            fetchOtherProperties(b);
-        });
+        if(fetchLists)
+            result.ifPresent( b -> fetchOtherProperties(b) );
 
         return result;
     }
