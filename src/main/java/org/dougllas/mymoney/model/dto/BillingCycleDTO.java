@@ -89,7 +89,7 @@ public class BillingCycleDTO implements Serializable{
     }
 
     public List<DebitDTO> getDebits() {
-        return debits;
+        return debits != null ? debits : Collections.emptyList();
     }
 
     public void setDebits(List<DebitDTO> debits) {

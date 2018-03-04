@@ -5,7 +5,7 @@ import {selectTab,showTabs} from '../common/tab/tabActions'
 import {reset, initialize} from 'redux-form'
 
 const BASE_URL = process.env.SERVICE_URL;
-const INITIAL_VALUES = {credits: [{}], debts: [{}]}
+const INITIAL_VALUES = {credits: [{}], debits: [{}]}
 
 
 export function getList(){
@@ -55,7 +55,14 @@ export function init(){
 }
 
 export function showUpdate(billingCycle){
-    console.log(billingCycle)
+    if(billingCycle.debits== undefined || billingCycle.debits.length == 0){
+        billingCycle.debits = [{}];
+    }
+
+    if(billingCycle.credits== undefined || billingCycle.credits.length == 0){
+        billingCycle.credits = [{}];
+    }
+
     return[
         showTabs('tabUpdate'),
         selectTab('tabUpdate'),
@@ -64,7 +71,6 @@ export function showUpdate(billingCycle){
 }
 
 export function showDelete(billingCycle){
-    console.log(billingCycle)
     return[
         showTabs('tabDelete'),
         selectTab('tabDelete'),
