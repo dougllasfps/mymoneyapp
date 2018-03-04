@@ -1,9 +1,6 @@
 package org.dougllas.mymoney.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -14,18 +11,36 @@ public class Debit implements Serializable, org.dougllas.mymoney.generic.Entity 
     private Integer id;
 
     @Column
-    @NotNull(message = "{validation.campo.name.null}")
-    @NotEmpty
     private String name;
 
     @Column
-    @NotNull(message = "{validation.campo.value.null}")
     private BigDecimal value;
 
     @Column
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "{validation.campo.status.null}")
     private DebitStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "billing_cycle")
+    private BillingCycle billingCycle;
+
+    public Debit() {
+    }
+
+    public Debit(String name, BigDecimal value, DebitStatus status, BillingCycle billingCycle) {
+        this.name = name;
+        this.value = value;
+        this.status = status;
+        this.billingCycle = billingCycle;
+    }
+
+    public Debit(Integer id, String name, BigDecimal value, DebitStatus status, BillingCycle billingCycle) {
+        this.id = id;
+        this.name = name;
+        this.value = value;
+        this.status = status;
+        this.billingCycle = billingCycle;
+    }
 
     public Integer getId() {
         return id;
@@ -58,4 +73,13 @@ public class Debit implements Serializable, org.dougllas.mymoney.generic.Entity 
     public void setStatus(DebitStatus status) {
         this.status = status;
     }
+
+    public BillingCycle getBillingCycle() {
+        return billingCycle;
+    }
+
+    public void setBillingCycle(BillingCycle billingCycle) {
+        this.billingCycle = billingCycle;
+    }
+
 }

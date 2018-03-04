@@ -11,16 +11,15 @@ import TabsHeader from '../common/tab/tabsHeader'
 import TabHeader from '../common/tab/tabHeader'
 import TabContent from '../common/tab/tabContent'
 import List from '../billingcycle/billingCycleList'
-import BillingCycleForm from '../billingcycle/billingCycleForm'
+import Form from '../billingcycle/billingCycleForm'
 
-import {selectTab, showTabs} from '../common/tab/tabActions'
+import {init, create, update, remove} from '../billingcycle/billingCycleActions'
 
 
 class BillingCycles extends React.Component{
 
     componentWillMount(){
-        this.props.selectTab('tabList');
-        this.props.showTabs('tabList', 'tabCreate')
+        this.props.init()
     }
 
     render(){
@@ -40,10 +39,14 @@ class BillingCycles extends React.Component{
                                 <List />
                             </TabContent>
                             <TabContent id="tabCreate">
-                                <BillingCycleForm />
+                                <Form onSubmit={this.props.create} submitLabel="Salvar" submitClass="success" />
                             </TabContent>
-                            <TabContent id="tabUpdate"><h1>Alterar</h1></TabContent>
-                            <TabContent id="tabDelete"><h1>Excluir</h1></TabContent>
+                            <TabContent id="tabUpdate">
+                                <Form onSubmit={this.props.update} submitLabel="Atualizar" submitClass="primary" />
+                            </TabContent>
+                            <TabContent id="tabDelete">
+                                <Form onSubmit={this.props.remove} readOnly={true} submitLabel="Deletar" submitClass="danger" />
+                            </TabContent>
                         </TabsContent>
                     </Tabs>
                 </Content>
@@ -52,6 +55,7 @@ class BillingCycles extends React.Component{
     }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({selectTab, showTabs}, dispatch)
+const actions = {create, update, remove,init};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
 
 export default connect(null, mapDispatchToProps)(BillingCycles)

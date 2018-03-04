@@ -7,10 +7,12 @@ import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 
 import promisse from 'redux-promise'
+import thunk from 'redux-thunk'
+import multi from 'redux-multi'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-const appStore = applyMiddleware(promisse)(createStore)(reducers, devTools);
+const appStore = applyMiddleware(promisse,thunk, multi)(createStore)(reducers, devTools);
 
 ReactDOM.render(
     <Provider store={appStore}>

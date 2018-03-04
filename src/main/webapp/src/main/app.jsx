@@ -6,6 +6,8 @@ import SideBar from '../common/template/sidebar'
 import Footer from '../common/template/rodape'
 import Rotas from './routes'
 
+import Messages from '../common/msg/messages'
+
 export default props => (
     <div className='wrapper'>
       <Header />
@@ -14,5 +16,6 @@ export default props => (
           <Rotas />
         </div>
       <Footer />
+      <Messages />
     </div>
 )

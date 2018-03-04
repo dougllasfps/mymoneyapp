@@ -4,7 +4,9 @@ node_modules
 target
 npm-debug.log.*
 /src/main/webapp/node_modules/
-.classpath
-.project
-.vscode
+/.classpath
+/npm-debug.log
+/.project
+/.settings/
+/.vscode/
 .settings

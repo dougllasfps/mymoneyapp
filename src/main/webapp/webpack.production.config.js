@@ -27,25 +27,24 @@ const loaders = [ babelLoader, extractTextPluginLoaders, fileLoader ]
 //enviroment
 const environment = {
     'process.env':{
-        SERVICE_URL : JSON.stringify('http://localhost:8080')
+        NODE_ENV : JSON.stringify('production'),
+        SERVICE_URL : JSON.stringify('https://mymoneyapp.herokuapp.com')
     }
 }
 
 //plugins
 const definePlugin = new webpack.DefinePlugin(environment)
 const extractTextPlugin = new ExtractTextPlugin('app.css')
+const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin()
 const providePlugin = new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery', 'window.jQuery': 'jquery'})
 
-const plugins = [ providePlugin, extractTextPlugin, definePlugin ]
+const plugins = [ providePlugin, extractTextPlugin, uglifyJsPlugin, definePlugin ]
 
 module.exports = {
     entry: './src/index.jsx',
     output: {
         path: '../resources/public',
         filename: './appbundle.js'
-    }, devServer: {
-        port: 8081,
-        contentBase: '../resources/public',
     },
     resolve: {
         extensions: ['', '.js', '.jsx'],
