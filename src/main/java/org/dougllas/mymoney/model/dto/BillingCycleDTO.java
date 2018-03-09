@@ -21,7 +21,7 @@ public class BillingCycleDTO implements Serializable{
     private Integer id;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "{validation.campo.name.empty}")
     private String name;
 
     @NotNull

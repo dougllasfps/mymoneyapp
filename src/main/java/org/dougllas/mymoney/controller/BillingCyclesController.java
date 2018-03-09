@@ -43,8 +43,8 @@ public class BillingCyclesController implements Serializable, ErrorHandler {
     @GetMapping("summary")
     public ResponseEntity<Summary> getSummary(){
         Summary summary = new Summary();
-        summary.setCredit(BigDecimal.valueOf(100));
-        summary.setDebt(BigDecimal.valueOf(200));
+        summary.setCredit(BigDecimal.valueOf(6000));
+        summary.setDebt(BigDecimal.valueOf(1200));
         return ResponseEntity.ok(summary);
     }
 
