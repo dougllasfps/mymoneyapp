@@ -6,7 +6,7 @@ import constants from './usuarioConstants'
 const BASE_URL = process.env.SERVICE_URL;
 
 export function logar(values){
-    return sendRequest(values, '/api/users/auth')
+    return sendRequest(values, `/api/users/auth?username=${values.username}&password=${values.password}`)
 }
 
 export function cadastrarUsuario(values){
@@ -22,7 +22,7 @@ export function logout(){
 
 function sendRequest(values, url){
     return dispatch => {
-        axios.post(`${BASE_URL}${url}`, values)
+        axios.post(`${BASE_URL}${url}`)
         .then( response => { 
             let user = response.data.data
             dispatch([{type: 'AUTHENTICATED_USER', payload: user}])
