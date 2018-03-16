@@ -15,20 +15,20 @@ export function cadastrarUsuario(values){
 
 export function logout(){
     return {
-        type: constants.INVALIDATE_USER,
+        type: 'INVALIDATE_USER',
         payload: null
     }
 }
 
 function sendRequest(values, url){
     return dispatch => {
-        axios.post(`${BASE_URL}${url}`)
+        axios.post(`${BASE_URL}${url}`,values)
         .then( response => { 
             let user = response.data.data
             dispatch([{type: 'AUTHENTICATED_USER', payload: user}])
         })
         .catch( err => {
-            console.log(err)            
+            console.log(`Ocorreu um erro ${err}`)            
         })
     }   
 }
