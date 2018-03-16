@@ -1,0 +1,5 @@
+export default () => ({
+    USER : 'USER',
+    AUTHENTICATED_USER: 'AUTHENTICATED_USER',
+    INVALIDATE_USER: 'INVALIDATE_USER'
+})

@@ -1,4 +1,4 @@
-package org.dougllas.mymoney.controller;
+package org.dougllas.mymoney.api.controller;
 
 import org.dougllas.mymoney.api.Response;
 import org.dougllas.mymoney.exceptionhandler.BadRequestException;
