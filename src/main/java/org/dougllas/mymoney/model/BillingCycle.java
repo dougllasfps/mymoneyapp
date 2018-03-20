@@ -21,6 +21,10 @@ public class BillingCycle implements Serializable, org.dougllas.mymoney.generic.
     @Column
     private Integer ano;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
     @OneToMany(mappedBy = "billingCycle")
     private List<Credit> credits;
 
@@ -97,5 +101,13 @@ public class BillingCycle implements Serializable, org.dougllas.mymoney.generic.
 
     public void setDebits(List<Debit> debits) {
         this.debits = debits;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

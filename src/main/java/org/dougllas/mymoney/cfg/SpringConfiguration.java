@@ -3,6 +3,7 @@ package org.dougllas.mymoney.cfg;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.*;
 
 /**
@@ -42,7 +46,30 @@ public class SpringConfiguration extends SpringBootServletInitializer {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public FilterRegistrationBean platformCorsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        CorsConfiguration configAutenticacao = new CorsConfiguration();
+        configAutenticacao.setAllowCredentials(true);
+        configAutenticacao.addAllowedOrigin("*");
+        configAutenticacao.addAllowedHeader("Authorization");
+        configAutenticacao.addAllowedHeader("Content-Type");
+        configAutenticacao.addAllowedHeader("Accept");
+        configAutenticacao.addAllowedMethod("POST");
+        configAutenticacao.addAllowedMethod("GET");
+        configAutenticacao.addAllowedMethod("DELETE");
+        configAutenticacao.addAllowedMethod("PUT");
+        configAutenticacao.addAllowedMethod("OPTIONS");
+        configAutenticacao.setMaxAge(3600L);
+        source.registerCorsConfiguration("/**", configAutenticacao);
+
+        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(-110);
+        return bean;
+    }
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer() {
         return new WebMvcConfigurerAdapter() {
 
             @Override
@@ -59,7 +86,11 @@ public class SpringConfiguration extends SpringBootServletInitializer {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD");
+                registry.addMapping("/**")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD","OPTIONS")
+                        .allowedHeaders("Authorization")
+                        .allowCredentials(true)
+                        .maxAge(3600);
             }
 
             @Override

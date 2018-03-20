@@ -14,7 +14,7 @@ public interface BillingCycleService {
 
     void delete(Integer id);
 
-    List<BillingCycle> findAll(boolean fetchLists);
+    List<BillingCycle> findAll(boolean fetchLists, Integer userId);
 
     Optional<BillingCycle> findById(Integer id, boolean fetchLists);
 

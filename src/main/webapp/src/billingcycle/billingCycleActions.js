@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios from 'axios'
 import {toastr} from 'react-redux-toastr'
 import {selectTab,showTabs} from '../common/tab/tabActions'
+import {logout} from '../common/login/loginActions'
 
 import {reset, initialize} from 'redux-form'
 
@@ -9,7 +10,24 @@ const INITIAL_VALUES = {credits: [{}], debits: [{}]}
 
 
 export function getList(){
-    let request = axios.get(`${BASE_URL}/api/billingCycles`)
+    const user = JSON.parse( localStorage.getItem("USER") )
+
+    if(user === undefined){
+        return dispatch => {
+            dispatch[logout()]
+        }
+    }
+
+    const requestUrl = `${BASE_URL}/api/billingCycles/user/${user.id}`
+
+    const requestInstance = axios.create({
+        headers: { Authorization: "Bearer " + user.token },
+        method: 'GET',
+        url: requestUrl
+    })
+
+    let request = requestInstance()
+        
     return {
         type: 'BILLING_CYCLES_FETCHED',
         payload: request
@@ -29,18 +47,36 @@ export function remove(values){
 }
 
 function submit(values, method){
-    console.log(values, method)
+    console.log(`values: ${values}`)    
+    
+    const user = JSON.parse(localStorage.getItem("USER"))
+    values.userId = user.id;
+
     let id = values.id ? values.id : '';
+
+    if(user == undefined){
+        return dispatch => {
+            dispatch[logout()]
+        }
+    }
+
+    const requestUrl = `${BASE_URL}/api/billingCycles/${id}`
+
     return dispatch => {
-        axios[method](`${BASE_URL}/api/billingCycles/${id}`, values)
+        axios[method](requestUrl, values, {
+            headers: { Authorization: "Bearer " + user.token }
+        })
         .then( resp => {
             toastr.success("Sucesso", "Operação realizada com sucesso.")
             dispatch(init())
         }).catch( e => {
             console.log(e, e.response.data, e.response)
-            e.response.data.errors.forEach(error => {
-                toastr.error("Erro", error)
-            });
+            if(e.response.data.errors){
+                
+                e.response.data.errors.forEach(error => {
+                    toastr.error("Erro", error)
+                });
+            }
         })
     }
 }

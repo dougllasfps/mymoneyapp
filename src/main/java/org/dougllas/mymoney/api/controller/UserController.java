@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,6 +30,11 @@ public class UserController implements Serializable, ErrorHandler {
 
     @Autowired
     private JwtTokenService tokenService;
+
+    @GetMapping
+    public ResponseEntity<List<User>> findAll(){
+        return ResponseEntity.ok(userService.findAll());
+    }
 
     @PostMapping("/auth")
     public ResponseEntity<Response> login(

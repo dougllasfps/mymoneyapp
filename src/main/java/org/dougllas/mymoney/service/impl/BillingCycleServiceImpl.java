@@ -43,8 +43,8 @@ public class BillingCycleServiceImpl implements BillingCycleService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BillingCycle> findAll(boolean fetchLists) {
-        List<BillingCycle> all = billingCycleRepository.findAll();
+    public List<BillingCycle> findAll(boolean fetchLists, Integer userId) {
+        List<BillingCycle> all = billingCycleRepository.findAllByUserId(userId);
 
         all.stream().forEach( b -> {
             if(fetchLists) {

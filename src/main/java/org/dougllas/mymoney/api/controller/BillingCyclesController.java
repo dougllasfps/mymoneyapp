@@ -4,9 +4,11 @@ import org.dougllas.mymoney.api.Response;
 import org.dougllas.mymoney.exceptionhandler.BadRequestException;
 import org.dougllas.mymoney.generic.ErrorHandler;
 import org.dougllas.mymoney.model.BillingCycle;
+import org.dougllas.mymoney.model.User;
 import org.dougllas.mymoney.model.dto.BillingCycleDTO;
 import org.dougllas.mymoney.model.Summary;
 import org.dougllas.mymoney.service.BillingCycleService;
+import org.dougllas.mymoney.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,9 @@ public class BillingCyclesController implements Serializable, ErrorHandler {
     @Autowired
     private BillingCycleService service;
 
+    @Autowired
+    private UserService userService;
+
     public BillingCycleService getService() {
         return service;
     }
@@ -48,10 +53,14 @@ public class BillingCyclesController implements Serializable, ErrorHandler {
         return ResponseEntity.ok(summary);
     }
 
-    @GetMapping
-    public ResponseEntity findAll() {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity findAll(@PathVariable("userId") Integer userId) {
+        if(!userService.findUserById(userId).isPresent()){
+            return ResponseEntity.badRequest().body(Response.createResponse("Usuário não encontrado para o Id passado"));
+        }
+
         List<BillingCycleDTO> dtoList = new ArrayList<>();
-        getService().findAll(true).forEach( b -> dtoList.add(BillingCycleDTO.entityToDTO(b)));
+        getService().findAll(true, userId).forEach( b -> dtoList.add(BillingCycleDTO.entityToDTO(b)));
         return new ResponseEntity(Response.createResponse(dtoList), HttpStatus.OK);
     }
 
@@ -100,6 +109,18 @@ public class BillingCyclesController implements Serializable, ErrorHandler {
         }
 
         BillingCycle entity = BillingCycleDTO.toEntity(values);
+        Optional<Integer> userId = Optional.ofNullable(values.getUserId());
+
+        Integer integerUserId = userId.get();
+
+        Optional<User> user = userService.findUserById(integerUserId);
+
+        if(!user.isPresent()){
+            response.getErrors().add("Usuário não encontrado para o Id passado.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        entity.setUser(user.get());
         getService().save(entity);
         return ResponseEntity.ok(Response.createResponse(BillingCycleDTO.entityToDTO(entity)));
     }

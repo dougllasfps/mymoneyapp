@@ -3,6 +3,7 @@ package org.dougllas.mymoney.api;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +36,12 @@ public class Response<T> {
     public static <T> Response<T> createResponse(T data){
         Response<T> response = new Response<>();
         response.setData(data);
+        return response;
+    }
+
+    public static <T> Response<T> createResponse(String... errors){
+        Response<T> response = new Response<>();
+        Arrays.stream(errors).forEach( e -> response.getErrors().add(e));
         return response;
     }
 

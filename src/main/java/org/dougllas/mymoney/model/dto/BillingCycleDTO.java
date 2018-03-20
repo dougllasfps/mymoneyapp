@@ -3,6 +3,7 @@ package org.dougllas.mymoney.model.dto;
 import org.dougllas.mymoney.model.BillingCycle;
 import org.dougllas.mymoney.model.Credit;
 import org.dougllas.mymoney.model.Debit;
+import org.dougllas.mymoney.model.User;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
@@ -31,6 +32,9 @@ public class BillingCycleDTO implements Serializable{
     @NotNull
     @Range(min = 1970, max = 2100)
     private Integer ano;
+
+    @NotNull
+    private Integer userId;
 
     private List<CreditDTO> credits;
 
@@ -99,14 +103,22 @@ public class BillingCycleDTO implements Serializable{
     public static BillingCycle toEntity(BillingCycleDTO dto){
 
         if(dto == null) return null;
-
         List<Credit> credits = new ArrayList<>();
-        dto.getCredits().forEach( c -> credits.add(CreditDTO.toEntity(c)) );
+
+        if(dto.getCredits() != null){
+            dto.getCredits().forEach( c -> credits.add(CreditDTO.toEntity(c)) );
+        }
 
         List<Debit> debits = new ArrayList<>();
-        dto.getDebits().forEach( d -> debits.add(DebitDTO.toEntity(d)) );
+        if(dto.getDebits() != null){
+            dto.getDebits().forEach( d -> debits.add(DebitDTO.toEntity(d)) );
+        }
 
-        return new BillingCycle(dto.id, dto.name, dto.month, dto.ano, credits, debits);
+        BillingCycle billingCycle = new BillingCycle(dto.id, dto.name, dto.month, dto.ano, credits, debits);
+        User user = new User();
+        user.setId(dto.getUserId());
+        billingCycle.setUser(user);
+        return billingCycle;
     }
 
     public static BillingCycleDTO entityToDTO(BillingCycle entity){
@@ -125,6 +137,16 @@ public class BillingCycleDTO implements Serializable{
             debits.add(e);
         });
 
-        return new BillingCycleDTO(entity.getId(), entity.getName(), entity.getMonth(), entity.getAno(), credits, debits );
+        BillingCycleDTO billingCycleDTO = new BillingCycleDTO(entity.getId(), entity.getName(), entity.getMonth(), entity.getAno(), credits, debits);
+        billingCycleDTO.setUserId(entity.getUser().getId());
+        return billingCycleDTO;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

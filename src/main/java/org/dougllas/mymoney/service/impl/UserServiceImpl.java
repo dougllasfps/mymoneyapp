@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,6 +35,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public Optional<User> autenticarUsuario(String login, String senha) {
         User user = loadUserByUsername(login);
 
@@ -48,6 +54,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findUserById(Integer id) {
+        return Optional.ofNullable( userRepository.getOne(id) );
     }
 
     @Override

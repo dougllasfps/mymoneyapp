@@ -3,9 +3,7 @@ package org.dougllas.mymoney.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dougllas.mymoney.model.Debit;
 import org.dougllas.mymoney.model.DebitStatus;
-import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -13,14 +11,14 @@ public class DebitDTO implements Serializable {
 
     private Integer id;
 
-    @NotNull(message = "{validation.campo.name.null}")
-    @NotEmpty
+//    @NotNull(message = "{validation.campo.name.null}")
+//    @NotEmpty
     private String name;
 
-    @NotNull(message = "{validation.campo.value.null}")
+//    @NotNull(message = "{validation.campo.value.null}")
     private BigDecimal value;
 
-    @NotNull(message = "{validation.campo.status.null}")
+//    @NotNull(message = "{validation.campo.status.null}")
     private DebitStatus status;
 
     @JsonIgnore

@@ -3,9 +3,7 @@ package org.dougllas.mymoney.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dougllas.mymoney.model.BillingCycle;
 import org.dougllas.mymoney.model.Credit;
-import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -17,11 +15,11 @@ public class CreditDTO implements Serializable {
 
     private Integer id;
 
-    @NotBlank(message = "{validation.campo.name.empty}")
-    @NotNull(message = "{validation.campo.name.null}")
+//    @NotBlank(message = "{validation.campo.name.empty}")
+//    @NotNull(message = "{validation.campo.name.null}")
     private String name;
 
-    @NotNull(message = "{validation.campo.value.null}")
+//    @NotNull(message = "{validation.campo.value.null}")
     private BigDecimal value;
 
     @JsonIgnore
